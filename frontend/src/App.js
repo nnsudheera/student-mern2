@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
+// ✅ Use environment variable
+const API = process.env.REACT_APP_API_URL;
+console.log("API:", API);
+
 function App() {
   const [student, setStudent] = useState({
     name: "",
@@ -15,7 +19,7 @@ function App() {
 
   // FETCH ALL
   const fetchStudents = async () => {
-    const res = await fetch("http://localhost:5000/api/students");
+    const res = await fetch(`${API}/api/students`);
     const data = await res.json();
     setStudents(data);
   };
@@ -34,14 +38,14 @@ function App() {
 
     if (editId) {
       // UPDATE
-      await fetch(`http://localhost:5000/api/students/${editId}`, {
+      await fetch(`${API}/api/students/${editId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(student)
       });
     } else {
       // ADD
-      await fetch("http://localhost:5000/api/students", {
+      await fetch(`${API}/api/students`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(student)
@@ -66,7 +70,7 @@ function App() {
 
   // DELETE
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:5000/api/students/${id}`, {
+    await fetch(`${API}/api/students/${id}`, {
       method: "DELETE"
     });
     fetchStudents();
@@ -75,7 +79,7 @@ function App() {
   // SEARCH
   const handleSearch = async () => {
     const res = await fetch(
-      `http://localhost:5000/api/students/search?query=${search}`
+      `${API}/api/students/search?query=${search}`
     );
     const data = await res.json();
     setStudents(data);
