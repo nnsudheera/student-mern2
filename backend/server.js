@@ -1,14 +1,16 @@
 
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
+
 
 const app = express();
 
+const cors = require("cors");
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL, // allow deployed frontend
+  origin: process.env.FRONTEND_URL,
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type"]
+  credentials: true
 }));
 
 app.use(express.json());
